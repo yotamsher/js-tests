@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>test text xor</title>
+    <script src="./the_script.js"></script>
+    <script lang="javascript">
+
+        const KEY = "SecretKeyIs99long0751435788sfkjhsdkjfhg"
+
+        function copy(ID_source, ID_target) {
+            var textToCopy = get_text(ID_source);
+            set_text(ID_target, textToCopy);
+        }
+
+        function get_text(ID_source) {
+            var textToCopy = document.getElementById(ID_source).value;
+            return textToCopy;
+        }
+
+        function set_text(ID_target, textToCopy) {
+            var whereToCopy = document.getElementById(ID_target);
+            whereToCopy.value = textToCopy;
+        }
+
+        function scramble() {
+            var text = get_text('name');
+            text = do_scramble(text);
+            set_text('text', text);
+        }
+
+        function deScramble() {
+            var text = get_text('text');
+            text = do_de_scramble(text);
+            set_text('back', text);
+        }
+
+        var utf16ToDig = function (s) {
+            var length = s.length;
+            var index = -1;
+            var result = "";
+            var hex;
+            while (++index < length) {
+                hex = s.charCodeAt(index).toString(16).toUpperCase();
+                result += ('0000' + hex).slice(-4);
+            }
+            return parseInt(result, 16);
+        }
+
+        var toCharCodes = function (s) {
+            var length = s.length;
+            var index = -1;
+            var result = "";
+            var hex;
+            while (++index < length) {
+                hex = s.charCodeAt(index).toString(16).toUpperCase();
+                result += ('00' + hex).slice(-2);
+            }
+            return result;
+        }
+
+
+        var fromCharCodes = function (s) {
+            var parts = s.match(/[\s\S]{1,2}/g)
+            var length = parts.length;
+            var index = -1;
+            var result = "";
+            var hex;
+            while (++index < length) {
+                hex = parts[index];
+                var code = parseInt(hex, 16);
+                result += String.fromCharCode(code)
+            }
+            return result;
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <TEXTAREA ID="name" style="height:25px; width:600px;"></TEXTAREA>
+    <BUTTON id="3" onClick="scramble('name', 'text');">Scramble</BUTTON><br>
+    <TEXTAREA ID="text" style="height:100px; width:600px;"></TEXTAREA>
+    <BUTTON id="4" onClick="deScramble('text', 'back');">DeScramble</BUTTON><br>
+    <TEXTAREA ID="back" style="height:25px; width:600px;"></TEXTAREA>
+
+</body>
+
+</html>
